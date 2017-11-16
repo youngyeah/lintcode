@@ -256,12 +256,74 @@ public class Solution {
 		return s;
 	}
 
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		while (sc.hasNext()) {
-			int i = sc.nextInt();
-			System.out.println(convertWords(i));
+	/*
+		The words are same rotate words if rotate the word to the right by loop, and get another.
+		Count how many different rotate word sets in dictionary.
+
+		样例
+			Given dict = ["picture", "turepic", "icturep", "word", "ordw", "lint"]
+			return 3.
+
+			"picture", "turepic", "icturep" are same ratote words.
+			"word", "ordw" are same too.
+			"lint" is the third word that different from the previous two words.
+	 */
+	public static int countRotateWords(List<String> words) {
+		/*Set<String> wordSet = new HashSet<>();
+		wordSet.addAll(words);
+		words.clear();
+		words.addAll(wordSet);
+		Set<String> set = new HashSet<>();
+		String s1;
+		String s2;
+		for (int i = 0; i < words.size() - 1; i++) {
+			s1 = words.get(i);
+			for (int j = i + 1; j < words.size(); j++) {
+				s2 = words.get(j);
+				if (s1.length() == s2.length() && (s1 + s1).indexOf(s2) != -1) {
+					set.add(s2);
+				}
+			}
 		}
+		words.removeAll(set);
+		return words.size();*/
+
+		int count = words.size();
+		boolean[] booleans = new boolean[words.size()];
+
+		Object[] strs = words.toArray();
+		String s1,s2;
+		for (int i = 0; i < count - 1; i++) {
+			if (booleans[i]) {
+				continue;
+			}
+			s1 = strs[i].toString();
+			for (int j = i + 1; j < count; j++) {
+				s2 = strs[j].toString();
+				if (s1.length() == s2.length() && (s1 + s1).indexOf(s2) != -1) {
+					booleans[j] = true;
+				}
+			}
+		}
+
+		for (int i = 0; i < booleans.length; i++) {
+			if (booleans[i]) {
+				count--;
+			}
+		}
+		return count;
+	}
+
+
+	public static void main(String[] args) {
+		List<String> words = new ArrayList<>();
+		words.add("a");
+		words.add("a");
+		words.add("a");
+		words.add("b");
+		HashSet<String> set = new HashSet<>();
+		set.addAll(words);
+		System.out.println(set.size());
 	}
 
 }
